@@ -106,6 +106,19 @@
         }, firstSymbolId);
 
         map.addLayer({
+            "id": "diffs-details",
+            "source": "diffs",
+            "source-layer": "diff",
+            "type": "line",
+            "paint": {
+                "line-color": "#FFFF00",
+                "line-width": 10,
+                "line-opacity": 0.2
+            },
+            "minzoom": 16
+        });
+
+        map.addLayer({
             "id": "diffs",
             "source": "diffs",
             "source-layer": "diff",
@@ -113,7 +126,8 @@
             "paint": {
                 "line-color": "#FFFF00",
                 "line-width": 2
-            }
+            },
+            "maxzoom": 16
         });
     });
 </script>
