@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Display a map</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoieGl2ayIsImEiOiJaQXc3QUJFIn0.nLL2yBYQbAQfhMBC-FIyXg';
+    var map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'mapbox://styles/xivk/cjdd899nbbm7y2spdd9xq6xil', // stylesheet location
+        center: [4.4629, 51.0671], // starting position [lng, lat]
+        zoom: 9, // starting zoom
+        hash: true
+    });
+
+    // Add zoom and rotation controls to the map.
+    map.addControl(new mapboxgl.NavigationControl());
+
+    map.on("load", function() {
+        var layers = map.getStyle().layers;
+        // Find the index of the first symbol layer in the map style
+        var firstSymbolId;
+        for (var i = 0; i < layers.length; i++) {
+            if (layers[i].id.includes("road")) {
+                firstSymbolId = layers[i].id;
+                break;
+            }
+        }
+
+        // replace road tiles with road tiles for this instance.
+        map.addSource("buffers", {
+            "type": "vector",
+            "tiles": [
+                "http://roads-tiles.osm.be/data/buffers/{z}/{x}/{y}.pbf"
+            ],
+            "maxzoom": 14
+        });
+        map.addSource("diffs", {
+            "type": "vector",
+            "tiles": [
+                "http://roads-tiles.osm.be/data/diff/{z}/{x}/{y}.pbf"
+            ],
+            "maxzoom": 14
+        });
+        // map.addSource("refs", {
+        //     "type": "vector",
+        //     "tiles": [
+        //         "http://roads-tiles.osm.be/data/refs/{z}/{x}/{y}.pbf"
+        //     ],
+        //     "maxzoom": 14
+        // });
+
+        map.addLayer({
+            "id": "buffers",
+            "source": "buffers",
+            "source-layer": "buffers",
+            "type": "fill",
+            "paint": {
+                "fill-color": "#FFFF00"
+            },
+            "minzoom": 14
+        }, firstSymbolId);
+
+        map.addLayer({
+            "id": "diffs",
+            "source": "diffs",
+            "source-layer": "diff",
+            "type": "line",
+            "paint": {
+                "line-color": "#FF0000",
+                "line-width": 2
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
