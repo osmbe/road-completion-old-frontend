@@ -91,7 +91,7 @@
         map.addSource("diffs", {
             "type": "vector",
             "tiles": [
-                "http://roads-tiles.osm.be/data/diff/{z}/{x}/{y}.pbf"
+                "http://roads-tiles.osm.be/data/diffs/{z}/{x}/{y}.pbf"
             ],
             "maxzoom": 14
         });
@@ -118,7 +118,7 @@
         map.addLayer({
             "id": "diffs-details",
             "source": "diffs",
-            "source-layer": "diff",
+            "source-layer": "diffs",
             "type": "line",
             "paint": {
                 "line-color": "#FFFF00",
@@ -131,7 +131,7 @@
         map.addLayer({
             "id": "diffs",
             "source": "diffs",
-            "source-layer": "diff",
+            "source-layer": "diffs",
             "type": "line",
             "paint": {
                 "line-color": "#FFFF00",
