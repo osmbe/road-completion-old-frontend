@@ -9,10 +9,20 @@
     <style>
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; }
+        #features {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 300px;
+            overflow: auto;
+            background: rgba(255, 255, 255, 0.8);
+        }
     </style>
 </head>
 <body>
 
+<pre id='features'></pre>
 <div id='map'></div>
 
 <script>
@@ -129,6 +139,11 @@
             },
             "maxzoom": 16
         });
+    });
+
+    map.on('mousemove', function (e) {
+        var features = map.queryRenderedFeatures(e.point);
+        document.getElementById('features').innerHTML = JSON.stringify(features, null, 2);
     });
 </script>
 
