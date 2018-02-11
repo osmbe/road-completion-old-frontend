@@ -1,0 +1,33 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.map {
+    height: 100%;
+    position: relative;
+    width: 100%;
+}
+.map canvas {
+    cursor: crosshair;
+}
+.map > .overlay {
+    background: rgba(255, 255, 255, 0.8);
+    bottom: 15px;
+    overflow: auto;
+    padding: 5px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    width: 300px;
+    z-index: 999;
+}
+.map > .overlay > .layers {
+    width: 100%;
+}
+.map > .overlay > .features {
+    min-height: 250px;
+}

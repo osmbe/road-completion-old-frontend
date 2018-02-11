@@ -4,8 +4,9 @@
   "description": "The road completion frontend API.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "test": "eslint ./assets/js/",
+    "start": "nodemon ./server.js",
+    "start:dev": "http-server ."
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,9 @@
   },
   "homepage": "https://github.com/osmbe/road-completion-frontend#readme",
   "devDependencies": {
-    "nodemon": "^1.14.11"
+    "eslint": "^4.17.0",
+    "http-server": "^0.11.1",
+    "nodemon": "^1.14.12"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
