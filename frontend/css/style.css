@@ -23,7 +23,7 @@ body {
     right: 0;
     bottom: 0;
     width: 0px;
-    max-width: 300px;
+    max-width: 600px;
     background: rgb(255, 255, 255);
     transition: all 0.2s;
 }

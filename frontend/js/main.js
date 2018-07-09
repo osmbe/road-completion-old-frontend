@@ -149,6 +149,12 @@ map.on('click', function (e) {
     }
 });
 
+
+function setFixed(feature) {
+    console.log('Mark issue as fixed by id = '+feature.properties['id']);
+    
+}
+
 function showFeatureDetails(features) {
     document.getElementById('features').innerHTML = '<div class="slide-head"><h2 class="slide-text">Info</h2></div>';
     document.getElementById('features').innerHTML += '<hr>';
@@ -193,12 +199,6 @@ function showFeatureDetails(features) {
     );
 }
 
-
-function setFixed(feature) {
-    console.log('Mark issue as fixed by id = '+feature.properties['id']);
-    
-}
-
 function hideSidePanel() {
     document.getElementById("features").style.width = "0px";
     document.getElementById("features").style.padding = "0px";
@@ -206,7 +206,7 @@ function hideSidePanel() {
 }
 
 function showSidePanel() {
-    document.getElementById("features").style.width = "400px";
+    document.getElementById("features").style.width = "30%";
     document.getElementById("features").style.padding = "30px";
     document.getElementById("features").style.paddingTop = "90px";
 }
