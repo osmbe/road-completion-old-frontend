@@ -1,0 +1,49 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#map {
+    position: absolute;
+    top: 0px;
+    bottom: 0;
+    width: 100%;
+}
+
+.navbar {
+    z-index: 9999;
+}
+
+#features {
+    padding: 0px;
+    padding-top: 100px;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 0px;
+    max-width: 300px;
+    background: rgb(255, 255, 255);
+    transition: all 0.5s;
+}
+
+.edit-btn{
+    width: 100%;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.slide-head{
+    width: 100%;
+    text-align: center;
+    font-weight: 100;
+}
+
+.mapboxgl-ctrl-top-right{
+    z-index: 99999999;
+}
+
+#map canvas {
+    cursor: crosshair;
+}
