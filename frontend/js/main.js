@@ -154,7 +154,7 @@ function showFeatureDetails(features) {
     document.getElementById('features').innerHTML += '<hr>';
     document.getElementById('features').innerHTML += '<p class="slide-text"><b>Street: </b>' + features[0].properties["orginal:RSTRNM"] + '</p>';
     document.getElementById('features').innerHTML += '<p class="slide-text"><b>City: </b>' + features[0].properties['orginal:LBLBEHEER'] + '</p>';
-    document.getElementById('features').innerHTML += '<a target="_blank" href="https://www.openstreetmap.org/edit#map=' + map.getZoom() + '/' + map.getCenter()["lat"] + '/' + map.getCenter()["lng"] + '" class="edit-btn btn btn-primary">Edit</a>';
+    document.getElementById('features').innerHTML += '<a target="_blank" href="https://www.openstreetmap.org/edit#map=' + map.getZoom()*1.1 + '/' + map.getCenter()["lat"] + '/' + map.getCenter()["lng"] + '" class="edit-btn btn btn-primary">Edit</a>';
     document.getElementById('features').innerHTML += `
             <hr>
             <div class="dropdown">
