@@ -147,19 +147,23 @@ map.on('click', function (e) {
     if (!selectedFeature) {
         document.getElementById('features').innerHTML = "";
     }
+
+    console.log(map.getCenter()["lng"]);
 });
 
 function showFeatureDetails(features){
-    console.log(features[0].properties);
+    //console.log(features[0]);
     
     document.getElementById('features').innerHTML = '<div class="slide-head"><h2 class="slide-text">Info</h2></div>';
     document.getElementById('features').innerHTML += '<hr>';
     document.getElementById('features').innerHTML += '<p class="slide-text"><b>Street: </b>'+features[0].properties["orginal:RSTRNM"]+'</p>';
     document.getElementById('features').innerHTML +=  '<p class="slide-text"><b>City: </b>'+features[0].properties['orginal:LBLBEHEER']+'</p>';
     document.getElementById('features').innerHTML +=  '<p class="slide-text">'+features[0].properties['orginal:LBLBGNORG']+'</p>';
-    document.getElementById('features').innerHTML += '<a href="#" class="edit-btn btn btn-primary">Edit</a>';
+    document.getElementById('features').innerHTML += '<a target="_blank" href="https://www.openstreetmap.org/edit#map='+map.getZoom()+'/'+map.getCenter()["lat"]+'/'+map.getCenter()["lng"]+'" class="edit-btn btn btn-primary">Edit</a>';
 
 }
+
+
 
 function hideSidePanel(){
     document.getElementById("features").style.width = "0px";
