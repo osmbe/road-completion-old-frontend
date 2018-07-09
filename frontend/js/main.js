@@ -32,6 +32,7 @@ map.on("load", function () {
         ],
         "maxzoom": 14
     });
+
     map.addSource("diffs", {
         "type": "vector",
         "tiles": [
@@ -39,7 +40,6 @@ map.on("load", function () {
         ],
         "maxzoom": 14
     });
-
 
     map.addLayer({
         "id": "buffers",
@@ -155,9 +155,49 @@ function showFeatureDetails(features) {
     document.getElementById('features').innerHTML += '<p class="slide-text"><b>Street: </b>' + features[0].properties["orginal:RSTRNM"] + '</p>';
     document.getElementById('features').innerHTML += '<p class="slide-text"><b>City: </b>' + features[0].properties['orginal:LBLBEHEER'] + '</p>';
     document.getElementById('features').innerHTML += '<a target="_blank" href="https://www.openstreetmap.org/edit#map=' + map.getZoom() + '/' + map.getCenter()["lat"] + '/' + map.getCenter()["lng"] + '" class="edit-btn btn btn-primary">Edit</a>';
+    document.getElementById('features').innerHTML += `
+            <hr>
+            <div class="dropdown">
+                <a class="status-btn btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Set a status
+                </a>
+            
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="#" id="fixedStatus">Fixed</a>
+                    <a class="dropdown-item" href="#">False positive</a>
+                </div>
+            </div>
+    `;
+    document.getElementById('features').innerHTML += `
+        <div id="fixed-alert" class="alert alert-success" role="alert">
+            This issue has been marked as fixed
+        </div>
+    `;
+
+
+    $('#fixedStatus').click(
+        function (e) {
+            
+            if (confirm("Please confirm you want to mark the issue as fixed")) {
+                //mark as fixed
+                setFixed(features[0]);
+                document.getElementById('fixed-alert').style.opacity = 1;
+                setTimeout(function(){
+                    document.getElementById('fixed-alert').style.opacity = 0;
+                }, 3000);
+            } else {
+                //canceled
+            }
+            
+        }
+    );
 }
 
 
+function setFixed(feature) {
+    console.log(feature);
+    
+}
 
 function hideSidePanel() {
     document.getElementById("features").style.width = "0px";
@@ -166,7 +206,7 @@ function hideSidePanel() {
 }
 
 function showSidePanel() {
-    document.getElementById("features").style.width = "300px";
+    document.getElementById("features").style.width = "400px";
     document.getElementById("features").style.padding = "30px";
     document.getElementById("features").style.paddingTop = "90px";
 }

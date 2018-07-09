@@ -47,3 +47,26 @@ body {
 #map canvas {
     cursor: crosshair;
 }
+
+.status-btn{
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px;
+    background-color: #B0B0B0;
+    border-color: #A3A3A3;
+}
+
+.status-btn:hover{
+    background-color: #969696;
+    border-color: #969696;
+}
+
+.dropdown-menu{
+    width: 100%;
+}
+
+#fixed-alert{
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
