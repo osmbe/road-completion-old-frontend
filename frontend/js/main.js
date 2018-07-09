@@ -195,7 +195,7 @@ function showFeatureDetails(features) {
 
 
 function setFixed(feature) {
-    console.log(feature);
+    console.log('Mark issue as fixed by id = '+feature.properties['id']);
     
 }
 
