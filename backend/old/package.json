@@ -1,0 +1,27 @@
+{
+  "name": "road-completion-api",
+  "version": "1.0.0",
+  "description": "The road completion frontend API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osmbe/road-completion-frontend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/osmbe/road-completion-frontend/issues"
+  },
+  "homepage": "https://github.com/osmbe/road-completion-frontend#readme",
+  "devDependencies": {
+    "nodemon": "^1.14.11"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2"
+  }
+}
