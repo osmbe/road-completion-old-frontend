@@ -70,3 +70,9 @@ body {
     opacity: 0;
     transition: opacity 1s ease-in-out;
 }
+
+#falsePositive-alert{
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}

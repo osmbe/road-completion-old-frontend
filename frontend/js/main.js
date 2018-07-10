@@ -170,7 +170,7 @@ function showFeatureDetails(features) {
             
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <a class="dropdown-item" href="#" id="fixedStatus">Fixed</a>
-                    <a class="dropdown-item" href="#">False positive</a>
+                    <a class="dropdown-item" href="#" id="falsePositiveStatus">False positive</a>
                 </div>
             </div>
     `;
@@ -180,10 +180,15 @@ function showFeatureDetails(features) {
         </div>
     `;
 
+    document.getElementById('features').innerHTML += `
+        <div id="falsePositive-alert" class="alert alert-success" role="alert">
+            This issue has been marked as a false positive
+        </div>
+    `;
+
 
     $('#fixedStatus').click(
-        function (e) {
-            
+        function (e) {  
             if (confirm("Please confirm you want to mark the issue as fixed")) {
                 //mark as fixed
                 setFixed(features[0]);
@@ -194,7 +199,21 @@ function showFeatureDetails(features) {
             } else {
                 //canceled
             }
-            
+        }
+    );
+
+    $('#falsePositiveStatus').click(
+        function (e) {  
+            if (confirm("Please confirm you want to mark the issue as a false positive")) {
+                //mark as fixed
+                setFixed(features[0]);
+                document.getElementById('falsePositive-alert').style.opacity = 1;
+                setTimeout(function(){
+                    document.getElementById('falsePositive-alert').style.opacity = 0;
+                }, 3000);
+            } else {
+                //canceled
+            }
         }
     );
 }
