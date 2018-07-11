@@ -13,6 +13,7 @@ router.get('/ISSUE/:id', (req, res, next) => {
   query.exec((err, issue) => {
     if (err) return next(err);
     if (!issue) return next(new Error('Not found ' + req.params.id));
+    res.send('Got an issue?');
     res.json(issue);
   });
 });
@@ -20,20 +21,22 @@ router.get('/ISSUE/:id', (req, res, next) => {
 // Post an issue
 router.post('/ISSUE/', (req, res, next) => {
   let issue = new Issue(req.body);
-  if(Issue.findById(issue._id))
-    next(new Error('Issue already exists, please try modifying its status'));
+  //if(Issue.findById(issue._id))
+    //next(new Error('Issue already exists, please try modifying its status'));
   issue.save((err, req) => {
     if (err) return next(err);
     //execute id change before saving
+    res.send('Posted an issue');
     res.json(req);
   });
 });
 
 // Return all issues
 router.get('/ISSUES/', (req, res, next) => {
-  Issue.find((err, issue) => {
+  Issue.find((err, issues) => {
     if (err) return next(err);
-    res.json(issue);
+    res.send('Got all issues');
+    res.json(issues);
   });
 });
 
@@ -41,6 +44,7 @@ router.get('/ISSUES/', (req, res, next) => {
 // we delete the fixed issues
 router.post('/ISSUES/', (req, res, next) => {
   Issue.deleteMany( { "status": "fixed" } );
+  res.send('Deleted all fixed issues');
 });
 
 // TODO: WRITE LOG INTO A TXT FILE
