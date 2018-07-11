@@ -21,7 +21,7 @@ router.get('/ISSUE/:id', (req, res, next) => {
 // Post an issue
 router.post('/ISSUE/', (req, res, next) => {
   let issue = new Issue(req.body);
-  Issue.findById(issue._id, function (err, iss) { 
+  Issue.findOne({"hash":issue.hash}, function (err, iss) { 
     
     if(err)
       return next(err);
