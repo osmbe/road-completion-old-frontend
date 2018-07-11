@@ -8,7 +8,6 @@ var mongoose = require('mongoose');
 
 mongoose.connection.on("open", function(ref) {
   console.log("Connected to mongodb server");
-  return start_up();
 });
 
 mongoose.connect('mongodb://osoctest:osoc123@ds139890.mlab.com:39890/osoc18road',{ useNewUrlParser: true });
