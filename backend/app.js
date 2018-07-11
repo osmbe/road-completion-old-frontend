@@ -10,7 +10,8 @@ mongoose.connection.on("open", function(ref) {
   console.log("Connected to mongodb server");
 });
 
-mongoose.connect('mongodb://osoctest:osoc123@ds139890.mlab.com:39890/osoc18road',{ useNewUrlParser: true });
+//mongoose.connect('mongodb://osoctest:osoc123@ds139890.mlab.com:39890/osoc18road',{ useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/osoc18road',{ useNewUrlParser: true });
 
 require('./models/Issue');
 

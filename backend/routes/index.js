@@ -21,14 +21,29 @@ router.get('/ISSUE/:id', (req, res, next) => {
 // Post an issue
 router.post('/ISSUE/', (req, res, next) => {
   let issue = new Issue(req.body);
-  //if(Issue.findById(issue._id))
-    //next(new Error('Issue already exists, please try modifying its status'));
-  issue.save((err, req) => {
-    if (err) return next(err);
-    //execute id change before saving
-    res.send('Posted an issue');
-    res.json(req);
+
+  Issue.findById(issue.id, function (err, iss) { 
+    
+    if(err)
+      return next(err);
+    
+    if(!iss){
+
+      issue.save((err, savedIssue) => {
+        
+        if (err) 
+          return next(err);
+
+        //execute id change before saving
+        res.json(savedIssue);
+      });
+      
+    }else{
+      //if it exist, change the status to the new status
+    }
+
   });
+  
 });
 
 // Return all issues
