@@ -39,9 +39,16 @@ router.post('/ISSUE/', (req, res, next) => {
 
     }else{
       //if it exist, change the status to the new status
-      res.send("already exists");
+      Issue.findOneAndUpdate(
+        {"hash": issue.hash },
+        { $set: { 
+          "status": issue.status
+        }},
+        function(err, updatedIssue){
+          res.json(issue);
+        }
+      );
     }
-
   });
   
 });
