@@ -57,7 +57,6 @@ router.post('/ISSUE/', (req, res, next) => {
 router.get('/ISSUES/', (req, res, next) => {
   Issue.find((err, issues) => {
     if (err) return next(err);
-    //res.send('Got all issues');
     res.json(issues);
   });
 });

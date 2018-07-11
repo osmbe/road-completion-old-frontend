@@ -19,6 +19,9 @@ var indexRouter = require('./routes/index');
 
 var app = express();
 
+
+let cors = require('cors');
+app.use(cors({origin: "*"}));
 // view engine setup
 app.set('view engine', 'jade');
 app.use(logger('dev'));
