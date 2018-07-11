@@ -21,7 +21,6 @@ router.get('/ISSUE/:id', (req, res, next) => {
 // Post an issue
 router.post('/ISSUE/', (req, res, next) => {
   let issue = new Issue(req.body);
-  issue._id = mongoose.Types.ObjectId(req.body.id);
   Issue.findById(issue._id, function (err, iss) { 
     
     if(err)
@@ -40,6 +39,7 @@ router.post('/ISSUE/', (req, res, next) => {
 
     }else{
       //if it exist, change the status to the new status
+      res.send("already exists");
     }
 
   });
