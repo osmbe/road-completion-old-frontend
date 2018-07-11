@@ -8,12 +8,12 @@ router.get('/', (req, res, next)  => {
   res.send('Server works!');
 });
 
-router.get('/ISSUE/:id', (req, res, next) => {
-  let query = Issue.findById(req.params.id);
+router.get('/ISSUE/:hash', (req, res, next) => {
+  let query = Issue.findOne({"hash": req.params.hash});
   query.exec((err, issue) => {
     if (err) return next(err);
     if (!issue) return next(new Error('Not found ' + req.params.id));
-    res.send('Got an issue?');
+    //res.send('Got an issue?');
     res.json(issue);
   });
 });
@@ -21,7 +21,7 @@ router.get('/ISSUE/:id', (req, res, next) => {
 // Post an issue
 router.post('/ISSUE/', (req, res, next) => {
   let issue = new Issue(req.body);
-  Issue.findOne({"hash":issue.hash}, function (err, iss) { 
+  Issue.findOne({"hash":issue.hash}, (err, iss) => { 
     
     if(err)
       return next(err);
@@ -57,7 +57,7 @@ router.post('/ISSUE/', (req, res, next) => {
 router.get('/ISSUES/', (req, res, next) => {
   Issue.find((err, issues) => {
     if (err) return next(err);
-    res.send('Got all issues');
+    //res.send('Got all issues');
     res.json(issues);
   });
 });
@@ -65,8 +65,14 @@ router.get('/ISSUES/', (req, res, next) => {
 // If we get a POST request with the /ISSUES/ route,
 // we delete the fixed issues
 router.post('/ISSUES/', (req, res, next) => {
-  Issue.deleteMany( { "status": "fixed" } );
-  res.send('Deleted all fixed issues');
+  Issue.deleteMany( { "status": "fixed"}, (err, iss) => {
+    res.send();
+  });
+});
+
+router.get('/ISSUES/CLEAR', (req, res, next) => {
+  Issue.collection.drop();
+  res.send();
 });
 
 // TODO: WRITE LOG INTO A TXT FILE
