@@ -21,8 +21,8 @@ router.get('/ISSUE/:id', (req, res, next) => {
 // Post an issue
 router.post('/ISSUE/', (req, res, next) => {
   let issue = new Issue(req.body);
-
-  Issue.findById(issue.id, function (err, iss) { 
+  issue._id = mongoose.Types.ObjectId(req.body.id);
+  Issue.findById(issue._id, function (err, iss) { 
     
     if(err)
       return next(err);
@@ -37,7 +37,7 @@ router.post('/ISSUE/', (req, res, next) => {
         //execute id change before saving
         res.json(savedIssue);
       });
-      
+
     }else{
       //if it exist, change the status to the new status
     }
