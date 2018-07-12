@@ -1,4 +1,8 @@
+const url = "http://localhost:3000/API/";
+
+
 mapboxgl.accessToken = 'pk.eyJ1IjoieGl2ayIsImEiOiJaQXc3QUJFIn0.nLL2yBYQbAQfhMBC-FIyXg';
+
 
 var map = new mapboxgl.Map({
     container: 'map', // container id
@@ -11,6 +15,7 @@ var map = new mapboxgl.Map({
 });
 
 mapSetup();
+
 
 //change style
 $('#default-style').click(function () {
@@ -50,7 +55,7 @@ function mapSetup() {
         var firstSymbolId;
         for (var i = 0; i < layers.length; i++) {
             if (layers[i].id.includes("road")) {
-                firstSymbolId = layers[i].id;
+                firstSymbolId = layers[i].id;                
                 break;
             }
         }
@@ -68,6 +73,7 @@ function mapSetup() {
             "type": "vector",
             "tiles": [
                 "http://roads-tiles.osm.be/data/diffs/{z}/{x}/{y}.pbf"
+                //"https://road-completion.osm.be/vector-tiles/diffs-tiles/{z}/{x}/{y}.pbf"
             ],
             "maxzoom": 14
         });
@@ -181,9 +187,23 @@ function mapSetup() {
     });
 }
 
-function setFixed(feature) {
+function setStatus(feature, status) {
     console.log('Mark issue as fixed by id = ' + feature.properties['id']);
 
+    let data = {
+        hash:''+feature.properties.id,
+        status: status
+    };
+
+    $.ajax({
+        type: "POST",
+        url: url+"ISSUE",
+        data: data,
+        success: function(){
+            console.log('marked as '+status+' in the database');
+        },
+        dataType: 'json'
+      });
 }
 
 function showFeatureDetails(features) {
@@ -202,7 +222,8 @@ function showFeatureDetails(features) {
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <a class="dropdown-item" href="#" id="fixedStatus">Fixed</a>
                     <a class="dropdown-item" href="#" id="falsePositiveStatus">False positive</a>
-                </div>
+                    <a class="dropdown-item" href="#" id="difficultStatus">Too Difficult</a>
+                    </div>
             </div>
     `;
     document.getElementById('features').innerHTML += `
@@ -211,18 +232,14 @@ function showFeatureDetails(features) {
         </div>
     `;
 
-    document.getElementById('features').innerHTML += `
-        <div id="falsePositive-alert" class="alert alert-success" role="alert">
-            This issue has been marked as a false positive
-        </div>
-    `;
+    
 
 
     $('#fixedStatus').click(
         function (e) {
             if (confirm("Please confirm you want to mark the issue as fixed")) {
                 //mark as fixed
-                setFixed(features[0]);
+                setStatus(features[0],'fixed');
                 document.getElementById('fixed-alert').style.opacity = 1;
                 setTimeout(function () {
                     document.getElementById('fixed-alert').style.opacity = 0;
@@ -237,10 +254,27 @@ function showFeatureDetails(features) {
         function (e) {
             if (confirm("Please confirm you want to mark the issue as a false positive")) {
                 //mark as fixed
-                setFixed(features[0]);
-                document.getElementById('falsePositive-alert').style.opacity = 1;
+                setStatus(features[0],'false-pos');
+                document.getElementById('fixed-alert').innerHTML = "The issue has been marked as a false possitive";
+                document.getElementById('fixed-alert').style.opacity = 1;
                 setTimeout(function () {
-                    document.getElementById('falsePositive-alert').style.opacity = 0;
+                    document.getElementById('fixed-alert').style.opacity = 0;
+                }, 3000);
+            } else {
+                //canceled
+            }
+        }
+    );
+
+    $('#difficultStatus').click(
+        function (e) {
+            if (confirm("Please confirm you want to mark the issue as a false positive")) {
+                //mark as fixed
+                setStatus(features[0],'difficult');
+                document.getElementById('fixed-alert').innerHTML = "The issue has been marked as too difficult";
+                document.getElementById('fixed-alert').style.opacity = 1;
+                setTimeout(function () {
+                    document.getElementById('fixed-alert').style.opacity = 0;
                 }, 3000);
             } else {
                 //canceled
