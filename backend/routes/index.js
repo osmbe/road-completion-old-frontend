@@ -64,8 +64,8 @@ router.get('/ISSUES/', (req, res, next) => {
 // If we get a POST request with the /ISSUES/ route,
 // we delete the fixed issues
 router.post('/ISSUES/', (req, res, next) => {
-  Issue.deleteMany( { "status": "fixed"}, (err, iss) => {
-    res.send();
+  Issue.find( { "status": "fixed"}, (err, iss) => {
+    res.json(iss);
   });
 });
 
