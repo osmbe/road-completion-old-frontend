@@ -43,7 +43,7 @@ router.post('/ISSUE/', (req, res, next) => {
         { $set: { 
           "status": issue.status
         }},
-        function(err, updatedIssue){
+        (err, updatedIssue) => {
           res.json(issue);
         }
       );
