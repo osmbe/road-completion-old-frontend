@@ -92,3 +92,16 @@ footer a{
     margin: 10px;
     
 }
+
+.status-mark-fixed{
+    color: green;
+}
+
+.status-mark-false-pos{
+    color: orange;
+}
+
+
+.status-mark-difficult{
+    color: crimson;
+}
