@@ -268,7 +268,7 @@ function showFeatureDetails(features) {
 
     $('#difficultStatus').click(
         function (e) {
-            if (confirm("Please confirm you want to mark the issue as a false positive")) {
+            if (confirm("Please confirm you want to mark the issue as too difficult")) {
                 //mark as fixed
                 setStatus(features[0],'difficult');
                 document.getElementById('fixed-alert').innerHTML = "The issue has been marked as too difficult";
