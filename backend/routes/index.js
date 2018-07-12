@@ -9,8 +9,7 @@ router.get('/', (req, res, next)  => {
 });
 
 router.get('/ISSUE/:hash', (req, res, next) => {
-  let query = Issue.findOne({"hash": req.params.hash});
-  query.exec((err, issue) => {
+  Issue.findOne({"hash": req.params.hash}, (err, issue) => {
     if (err) return next(err);
     if (!issue) return next(new Error('Not found ' + req.params.id));
     //res.send('Got an issue?');
