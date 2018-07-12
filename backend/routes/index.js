@@ -9,8 +9,7 @@ router.get('/', (req, res, next)  => {
 });
 
 router.get('/ISSUE/:hash', (req, res, next) => {
-  let query = Issue.findOne({"hash": req.params.hash});
-  query.exec((err, issue) => {
+  Issue.findOne({"hash": req.params.hash}, (err, issue) => {
     if (err) return next(err);
     if (!issue) return next(new Error('Not found ' + req.params.id));
     //res.send('Got an issue?');
@@ -44,7 +43,7 @@ router.post('/ISSUE/', (req, res, next) => {
         { $set: { 
           "status": issue.status
         }},
-        function(err, updatedIssue){
+        (err, updatedIssue) => {
           res.json(issue);
         }
       );
@@ -64,14 +63,9 @@ router.get('/ISSUES/', (req, res, next) => {
 // If we get a POST request with the /ISSUES/ route,
 // we delete the fixed issues
 router.post('/ISSUES/', (req, res, next) => {
-  Issue.deleteMany( { "status": "fixed"}, (err, iss) => {
-    res.send();
+  Issue.find( { "status": "fixed"}, (err, iss) => {
+    res.json(iss);
   });
-});
-
-router.get('/ISSUES/CLEAR', (req, res, next) => {
-  Issue.collection.drop();
-  res.send();
 });
 
 // TODO: WRITE LOG INTO A TXT FILE
