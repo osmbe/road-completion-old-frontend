@@ -1,24 +1,11 @@
 const url = "http://localhost:3000/API/";
+const token = 'pk.eyJ1IjoieGl2ayIsImEiOiJaQXc3QUJFIn0.nLL2yBYQbAQfhMBC-FIyXg';
+let map;
+let fixedIssues;
 
+$(document).ready(function () {
+    mapboxgl.accessToken = token;
 
-mapboxgl.accessToken = 'pk.eyJ1IjoieGl2ayIsImEiOiJaQXc3QUJFIn0.nLL2yBYQbAQfhMBC-FIyXg';
-
-
-var map = new mapboxgl.Map({
-    container: 'map', // container id
-    style: 'mapbox://styles/mapbox/streets-v9',
-    // style: 'mapbox://styles/mapbox/satellite-v9',
-    // style: 'mapbox://styles/xivk/cjdd899nbbm7y2spdd9xq6xil', // stylesheet location
-    center: [4.380068778991699, 50.85095984723529], // starting position [lng, lat]
-    zoom: 14, // starting zoom
-    hash: true
-});
-
-mapSetup();
-
-
-//change style
-$('#default-style').click(function () {
     map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'mapbox://styles/mapbox/streets-v9',
@@ -28,34 +15,65 @@ $('#default-style').click(function () {
         zoom: 14, // starting zoom
         hash: true
     });
-    mapSetup();
+
+    //change style
+    $('#default-style').click(function () {
+        map = new mapboxgl.Map({
+            container: 'map', // container id
+            style: 'mapbox://styles/mapbox/streets-v9',
+            // style: 'mapbox://styles/mapbox/satellite-v9',
+            // style: 'mapbox://styles/xivk/cjdd899nbbm7y2spdd9xq6xil', // stylesheet location
+            center: [4.380068778991699, 50.85095984723529], // starting position [lng, lat]
+            zoom: 14, // starting zoom
+            hash: true
+        });
+        mapSetup();
+    });
+
+    $('#satellite-style').click(function () {
+        map = new mapboxgl.Map({
+            container: 'map', // container id
+            //style: 'mapbox://styles/mapbox/streets-v9',
+            style: 'mapbox://styles/mapbox/satellite-v9',
+            // style: 'mapbox://styles/xivk/cjdd899nbbm7y2spdd9xq6xil', // stylesheet location
+            center: [4.380068778991699, 50.85095984723529], // starting position [lng, lat]
+            zoom: 14, // starting zoom
+            hash: true
+        });
+        mapSetup();
+    });
+
+    $.get(url + "ISSUES", function (data) {
+        fixedIssues = data;
+        mapSetup();
+        console.log(fixedIssues);
+
+    });
+
+
+
 });
 
-$('#satellite-style').click(function () {
-    map = new mapboxgl.Map({
-        container: 'map', // container id
-        //style: 'mapbox://styles/mapbox/streets-v9',
-        style: 'mapbox://styles/mapbox/satellite-v9',
-        // style: 'mapbox://styles/xivk/cjdd899nbbm7y2spdd9xq6xil', // stylesheet location
-        center: [4.380068778991699, 50.85095984723529], // starting position [lng, lat]
-        zoom: 14, // starting zoom
-        hash: true
+
+function getData(){
+    $.get(url + "ISSUES", function (data) {
+        fixedIssues = data;
     });
-    mapSetup();
-});
+}
 
 function mapSetup() {
-
     // Add zoom and rotation controls to the map.
     map.addControl(new mapboxgl.NavigationControl());
 
     map.on("load", function () {
+
         var layers = map.getStyle().layers;
+
         // Find the index of the first symbol layer in the map style
         var firstSymbolId;
         for (var i = 0; i < layers.length; i++) {
             if (layers[i].id.includes("road")) {
-                firstSymbolId = layers[i].id;                
+                firstSymbolId = layers[i].id;
                 break;
             }
         }
@@ -188,26 +206,45 @@ function mapSetup() {
 }
 
 function setStatus(feature, status) {
+
     console.log('Mark issue as fixed by id = ' + feature.properties['id']);
 
     let data = {
-        hash:''+feature.properties.id,
+        hash: '' + feature.properties.id,
         status: status
     };
 
     $.ajax({
         type: "POST",
-        url: url+"ISSUE",
+        url: url + "ISSUE",
         data: data,
-        success: function(){
-            console.log('marked as '+status+' in the database');
+        success: function () {
+            console.log('marked as ' + status + ' in the database');
+            getData();
         },
         dataType: 'json'
-      });
+    });
+
 }
 
 function showFeatureDetails(features) {
-    document.getElementById('features').innerHTML = '<div class="slide-head"><h2 class="slide-text">Info</h2></div>';
+
+    let status = '';
+
+    $.each(fixedIssues, function (i, iss) {
+        let id = features[0].properties['id'];
+        if (iss.hash == id) {
+            status = '<p class="status-mark-'+iss.status+'">' + iss.status + '</p>'
+        }
+    });
+
+
+
+
+    document.getElementById('features').innerHTML = `
+    <div id="slidehead" class="slide-head">
+        <h2 class="slide-text">Info</h2>`+ status + `
+    </div>`;
     document.getElementById('features').innerHTML += '<hr>';
     document.getElementById('features').innerHTML += '<p class="slide-text"><b>Street: </b>' + features[0].properties["orginal:RSTRNM"] + '</p>';
     document.getElementById('features').innerHTML += '<p class="slide-text"><b>City: </b>' + features[0].properties['orginal:LBLBEHEER'] + '</p>';
@@ -232,15 +269,16 @@ function showFeatureDetails(features) {
         </div>
     `;
 
-    
+
 
 
     $('#fixedStatus').click(
         function (e) {
             if (confirm("Please confirm you want to mark the issue as fixed")) {
                 //mark as fixed
-                setStatus(features[0],'fixed');
+                setStatus(features[0], 'fixed');
                 document.getElementById('fixed-alert').style.opacity = 1;
+                document.getElementById('slidehead').innerHTML += '<p class="status-mark-fixed">Fixed</p>';
                 setTimeout(function () {
                     document.getElementById('fixed-alert').style.opacity = 0;
                 }, 3000);
@@ -254,8 +292,9 @@ function showFeatureDetails(features) {
         function (e) {
             if (confirm("Please confirm you want to mark the issue as a false positive")) {
                 //mark as fixed
-                setStatus(features[0],'false-pos');
+                setStatus(features[0], 'false-pos');
                 document.getElementById('fixed-alert').innerHTML = "The issue has been marked as a false possitive";
+                document.getElementById('slidehead').innerHTML += '<p class="status-mark-false-pos">False Positive</p>';
                 document.getElementById('fixed-alert').style.opacity = 1;
                 setTimeout(function () {
                     document.getElementById('fixed-alert').style.opacity = 0;
@@ -270,8 +309,9 @@ function showFeatureDetails(features) {
         function (e) {
             if (confirm("Please confirm you want to mark the issue as too difficult")) {
                 //mark as fixed
-                setStatus(features[0],'difficult');
+                setStatus(features[0], 'difficult');
                 document.getElementById('fixed-alert').innerHTML = "The issue has been marked as too difficult";
+                document.getElementById('slidehead').innerHTML += '<p class="status-mark-difficult">Difficult</p>';
                 document.getElementById('fixed-alert').style.opacity = 1;
                 setTimeout(function () {
                     document.getElementById('fixed-alert').style.opacity = 0;
