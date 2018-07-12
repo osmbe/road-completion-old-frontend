@@ -69,11 +69,6 @@ router.post('/ISSUES/', (req, res, next) => {
   });
 });
 
-router.get('/ISSUES/CLEAR', (req, res, next) => {
-  Issue.collection.drop();
-  res.send();
-});
-
 // TODO: WRITE LOG INTO A TXT FILE
 
 module.exports = router;
