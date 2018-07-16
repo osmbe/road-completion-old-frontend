@@ -1,3 +1,4 @@
+require('./models/Issue');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -7,14 +8,13 @@ var mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
 var app = express();
 let cors = require('cors');
-require('./models/Issue');
 
 
 mongoose.connection.on("open", (ref) => {
   console.log("Connected to mongodb server");
 });
 
-//mongoose.connect('mongodb://osoctest:osoc123@ds139890.mlab.com:39890/osoc18road',{ useNewUrlParser: true });
+// mongoose.connect('mongodb://osoctest:osoc123@ds139890.mlab.com:39890/osoc18road',{ useNewUrlParser: true });
 mongoose.connect('mongodb://localhost:27017/osoc18road',{ useNewUrlParser: true });
 
 app.use(cors({origin: "*"}));
