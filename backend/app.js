@@ -29,9 +29,8 @@ mongoose.connection.on("open", (ref) => {
   console.log("Connected to mongodb server");
 });
 
-//app.use(cors({origin: "*"}));
+app.use(cors({origin: "*"}));
 // view engine setup
-app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(express.json());
@@ -42,8 +41,6 @@ app.use(passport.session());
 app.set('trust proxy', 1) // trust first proxy
 app.use(session(
   {
-    resave: false,
-    saveUninitialized: false,
     secret: 'keyboard cat',
     cookie: {secure: 'auto'}
   }
