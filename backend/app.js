@@ -6,20 +6,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
-var passport = require('passport');
-var osmStrategy = require('./models/Strategy');
-var authRouter = require('./routes/authentication');
 var app = express();
-var session = require('express-session');
 let cors = require('cors');
-
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-
-passport.deserializeUser((obj, done) => {
-  done(null, obj);
-});
 
 // mongoose.connect('mongodb://osoctest:osoc123@ds139890.mlab.com:39890/osoc18road',{ useNewUrlParser: true });
 mongoose.connect('mongodb://localhost:27017/osoc18road',{ useNewUrlParser: true });
@@ -37,24 +25,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(passport.initialize());
-app.use(passport.session());
-app.set('trust proxy', 1) // trust first proxy
-app.use(session(
-  {
-    resave: false,
-    saveUninitialized: false,
-    secret: 'keyboard cat',
-    cookie: {secure: 'auto'}
-  }
-));
 app.use(express.static(path.join(__dirname, 'public')));
-  // Initialize Passport!  Also use passport.session() middleware, to support
-  // persistent login sessions (recommended).
-
 
 app.use('/API/', indexRouter);
-app.use('/AUTH/', authRouter);
 
 app.listen(3000, () => {
   console.log("App running on port 3000");
