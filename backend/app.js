@@ -1,3 +1,4 @@
+require('./models/Issue');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -11,7 +12,6 @@ var authRouter = require('./routes/authentication');
 var app = express();
 var session = require('express-session');
 let cors = require('cors');
-require('./models/Issue');
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -21,7 +21,7 @@ passport.deserializeUser((obj, done) => {
   done(null, obj);
 });
 
-//mongoose.connect('mongodb://osoctest:osoc123@ds139890.mlab.com:39890/osoc18road',{ useNewUrlParser: true });
+// mongoose.connect('mongodb://osoctest:osoc123@ds139890.mlab.com:39890/osoc18road',{ useNewUrlParser: true });
 mongoose.connect('mongodb://localhost:27017/osoc18road',{ useNewUrlParser: true });
 
 

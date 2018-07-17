@@ -58,6 +58,8 @@ $(document).ready(function () {
 function getData(){
     $.get(url + "ISSUES", function (data) {
         fixedIssues = data;
+
+        redoStatusFilters();
     });
 }
 
@@ -90,8 +92,8 @@ function mapSetup() {
         map.addSource("diffs", {
             "type": "vector",
             "tiles": [
-                "http://roads-tiles.osm.be/data/diffs/{z}/{x}/{y}.pbf"
-                //"https://road-completion.osm.be/vector-tiles/diffs-tiles/{z}/{x}/{y}.pbf"
+                //"http://roads-tiles.osm.be/data/diffs/{z}/{x}/{y}.pbf"
+                "https://road-completion.osm.be/vector-tiles/diffs-tiles/{z}/{x}/{y}.pbf"
             ],
             "maxzoom": 14
         });
@@ -158,7 +160,9 @@ function mapSetup() {
             },
             "filter": ["==", "id", ""],
             "maxzoom": 16
-        });
+        }); 
+
+        redoStatusFilters();
     });
 
     var selectedFeature = "";
@@ -189,6 +193,8 @@ function mapSetup() {
                 selectedFeature = "";
             }
 
+            console.log(features[0]);
+
             selectedFeature = features[0].properties.id;
 
             map.setFilter("diffs-hover", ["==", "id", selectedFeature]);
@@ -203,6 +209,18 @@ function mapSetup() {
             document.getElementById('features').innerHTML = "";
         }
     });
+}
+
+function redoStatusFilters() {
+    var fixedFilter = [];
+    fixedFilter.push("!in");
+    fixedFilter.push("id");
+    fixedIssues.forEach(function(fixedIssue){
+        fixedFilter.push(fixedIssue.hash);
+    });
+
+    map.setFilter("diffs", fixedFilter);
+    map.setFilter("diffs-details", fixedFilter);
 }
 
 function setStatus(feature, status) {
@@ -224,7 +242,6 @@ function setStatus(feature, status) {
         },
         dataType: 'json'
     });
-
 }
 
 function showFeatureDetails(features) {
