@@ -1,6 +1,6 @@
 var auth = osmAuth({
-    oauth_secret: '9WfJnwQxDvvYagx1Ut0tZBsOZ0ZCzAvOje3u1TV0',
-    oauth_consumer_key: 'WLwXbm6XFMG7WrVnE8enIF6GzyefYIN6oUJSxG65'
+    oauth_secret: consumer_secret,
+    oauth_consumer_key: consumer_key
 });
 
 function done(err, res) {
@@ -36,18 +36,5 @@ function update() {
     }
 }
 
-function eventHandler(){
-    document.getElementById('authenticate').onclick = function () {
-        auth.authenticate(function () {
-            update();
-        });
-    };
 
-    document.getElementById('logout').onclick = function () {
-        auth.logout();
-        update();
-    };
-}
-
-eventHandler();
 update();

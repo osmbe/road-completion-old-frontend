@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var app = express();
 let cors = require('cors');
 
+
 // mongoose.connect('mongodb://osoctest:osoc123@ds139890.mlab.com:39890/osoc18road',{ useNewUrlParser: true });
 mongoose.connect('mongodb://localhost:27017/osoc18road',{ useNewUrlParser: true });
 
@@ -17,7 +18,7 @@ mongoose.connection.on("open", (ref) => {
   console.log("Connected to mongodb server");
 });
 
-//app.use(cors({origin: "*"}));
+app.use(cors({origin: "*"}));
 // view engine setup
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');

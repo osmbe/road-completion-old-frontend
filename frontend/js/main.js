@@ -46,7 +46,6 @@ $(document).ready(function () {
     $.get(url + "ISSUES", function (data) {
         fixedIssues = data;
         mapSetup();
-        console.log(fixedIssues);
 
     });
 
@@ -55,7 +54,7 @@ $(document).ready(function () {
 });
 
 
-function getData(){
+function getData() {
     $.get(url + "ISSUES", function (data) {
         fixedIssues = data;
 
@@ -160,7 +159,7 @@ function mapSetup() {
             },
             "filter": ["==", "id", ""],
             "maxzoom": 16
-        }); 
+        });
 
         redoStatusFilters();
     });
@@ -193,7 +192,6 @@ function mapSetup() {
                 selectedFeature = "";
             }
 
-            console.log(features[0]);
 
             selectedFeature = features[0].properties.id;
 
@@ -215,7 +213,7 @@ function redoStatusFilters() {
     var fixedFilter = [];
     fixedFilter.push("!in");
     fixedFilter.push("id");
-    fixedIssues.forEach(function(fixedIssue){
+    fixedIssues.forEach(function (fixedIssue) {
         fixedFilter.push(fixedIssue.hash);
     });
 
@@ -223,13 +221,17 @@ function redoStatusFilters() {
     map.setFilter("diffs-details", fixedFilter);
 }
 
-function setStatus(feature, status) {
+function setStatus(feature, status, callback) {
 
-    console.log('Mark issue as fixed by id = ' + feature.properties['id']);
-
+    let token = localStorage.getItem('https://www.openstreetmap.orgoauth_token');
+    let secret = localStorage.getItem('https://www.openstreetmap.orgoauth_token_secret');
     let data = {
         hash: '' + feature.properties.id,
-        status: status
+        status: status,
+        c_key: consumer_key,
+        c_scrt: consumer_secret,
+        token: token.slice(1, -1),
+        secret: secret.slice(1, -1)
     };
 
     $.ajax({
@@ -237,8 +239,8 @@ function setStatus(feature, status) {
         url: url + "ISSUE",
         data: data,
         success: function () {
-            console.log('marked as ' + status + ' in the database');
             getData();
+            callback();
         },
         dataType: 'json'
     });
@@ -251,7 +253,7 @@ function showFeatureDetails(features) {
     $.each(fixedIssues, function (i, iss) {
         let id = features[0].properties['id'];
         if (iss.hash == id) {
-            status = '<p class="status-mark-'+iss.status+'">' + iss.status + '</p>'
+            status = '<p class="status-mark-' + iss.status + '">' + iss.status + '</p>'
         }
     });
 
@@ -266,7 +268,10 @@ function showFeatureDetails(features) {
     document.getElementById('features').innerHTML += '<p class="slide-text"><b>Street: </b>' + features[0].properties["orginal:RSTRNM"] + '</p>';
     document.getElementById('features').innerHTML += '<p class="slide-text"><b>City: </b>' + features[0].properties['orginal:LBLBEHEER'] + '</p>';
     document.getElementById('features').innerHTML += '<a target="_blank" href="https://www.openstreetmap.org/edit#map=' + map.getZoom() * 1.1 + '/' + map.getCenter()["lat"] + '/' + map.getCenter()["lng"] + '" class="edit-btn btn btn-primary">Edit</a>';
-    document.getElementById('features').innerHTML += `
+
+
+    if (auth.authenticated()) {
+        document.getElementById('features').innerHTML += `
             <hr>
             <div class="dropdown">
                 <a class="status-btn btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -279,7 +284,23 @@ function showFeatureDetails(features) {
                     <a class="dropdown-item" href="#" id="difficultStatus">Too Difficult</a>
                     </div>
             </div>
-    `;
+        `;
+
+    } else {
+        document.getElementById('features').innerHTML += `
+            <hr>
+                <button id="not-loggedin-btn" class="status-btn btn btn-secondary "  >
+                    Set a status (Please log in)
+                </button>
+        `;
+
+
+
+    }
+
+
+
+
     document.getElementById('features').innerHTML += `
         <div id="fixed-alert" class="alert alert-success" role="alert">
             This issue has been marked as fixed
@@ -287,18 +308,45 @@ function showFeatureDetails(features) {
     `;
 
 
+    $("#not-loggedin-btn").click(function () {
+        auth.authenticate(function () {
+            update();
+            hideSidePanel();
+            showFeatureDetails(features);
+            showSidePanel();
+        });
+    });
+
+    document.getElementById('authenticate').onclick = function () {
+        auth.authenticate(function () {
+            update();
+            hideSidePanel();
+            showFeatureDetails(features);
+            showSidePanel();
+        });
+    };
+
+    document.getElementById('logout').onclick = function () {
+        auth.logout();
+        update();
+        hideSidePanel();
+        showFeatureDetails(features);
+        showSidePanel();
+    };
 
 
     $('#fixedStatus').click(
         function (e) {
             if (confirm("Please confirm you want to mark the issue as fixed")) {
                 //mark as fixed
-                setStatus(features[0], 'fixed');
-                document.getElementById('fixed-alert').style.opacity = 1;
-                document.getElementById('slidehead').innerHTML += '<p class="status-mark-fixed">Fixed</p>';
-                setTimeout(function () {
-                    document.getElementById('fixed-alert').style.opacity = 0;
-                }, 3000);
+                setStatus(features[0], 'fixed', function callback() {
+                    document.getElementById('fixed-alert').style.opacity = 1;
+                    document.getElementById('slidehead').innerHTML += '<p class="status-mark-fixed">Fixed</p>';
+                    setTimeout(function () {
+                        document.getElementById('fixed-alert').style.opacity = 0;
+                    }, 3000);
+                });
+
             } else {
                 //canceled
             }
@@ -309,13 +357,15 @@ function showFeatureDetails(features) {
         function (e) {
             if (confirm("Please confirm you want to mark the issue as a false positive")) {
                 //mark as fixed
-                setStatus(features[0], 'false-pos');
-                document.getElementById('fixed-alert').innerHTML = "The issue has been marked as a false possitive";
-                document.getElementById('slidehead').innerHTML += '<p class="status-mark-false-pos">False Positive</p>';
-                document.getElementById('fixed-alert').style.opacity = 1;
-                setTimeout(function () {
-                    document.getElementById('fixed-alert').style.opacity = 0;
-                }, 3000);
+                setStatus(features[0], 'false-pos', function () {
+                    document.getElementById('fixed-alert').innerHTML = "The issue has been marked as a false possitive";
+                    document.getElementById('slidehead').innerHTML += '<p class="status-mark-false-pos">False Positive</p>';
+                    document.getElementById('fixed-alert').style.opacity = 1;
+                    setTimeout(function () {
+                        document.getElementById('fixed-alert').style.opacity = 0;
+                    }, 3000);
+                });
+
             } else {
                 //canceled
             }
@@ -326,13 +376,15 @@ function showFeatureDetails(features) {
         function (e) {
             if (confirm("Please confirm you want to mark the issue as too difficult")) {
                 //mark as fixed
-                setStatus(features[0], 'difficult');
-                document.getElementById('fixed-alert').innerHTML = "The issue has been marked as too difficult";
-                document.getElementById('slidehead').innerHTML += '<p class="status-mark-difficult">Difficult</p>';
-                document.getElementById('fixed-alert').style.opacity = 1;
-                setTimeout(function () {
-                    document.getElementById('fixed-alert').style.opacity = 0;
-                }, 3000);
+                setStatus(features[0], 'difficult', function () {
+                    document.getElementById('fixed-alert').innerHTML = "The issue has been marked as too difficult";
+                    document.getElementById('slidehead').innerHTML += '<p class="status-mark-difficult">Difficult</p>';
+                    document.getElementById('fixed-alert').style.opacity = 1;
+                    setTimeout(function () {
+                        document.getElementById('fixed-alert').style.opacity = 0;
+                    }, 3000);
+                });
+
             } else {
                 //canceled
             }
