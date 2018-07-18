@@ -105,3 +105,12 @@ footer a{
 .status-mark-difficult{
     color: crimson;
 }
+
+.login-btn{
+    background-color: transparent!important;
+    border: none;
+}
+
+.mapboxgl-ctrl-top-right .mapboxgl-ctrl {
+    margin: 80px 20px 0 0;
+}
