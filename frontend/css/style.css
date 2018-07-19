@@ -114,3 +114,7 @@ footer a{
 .mapboxgl-ctrl-top-right .mapboxgl-ctrl {
     margin: 80px 20px 0 0;
 }
+
+.modal-dialog{
+    margin-top: 150px;
+}

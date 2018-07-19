@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
+var notesRouter = require('./routes/notes');
 var app = express();
 let cors = require('cors');
 
@@ -29,6 +30,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/API/', indexRouter);
+app.use('/API/notes/', notesRouter);
 
 app.listen(3000, () => {
   console.log("App running on port 3000");

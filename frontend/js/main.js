@@ -2,6 +2,8 @@ const url = "http://localhost:3000/API/";
 const token = 'pk.eyJ1IjoieGl2ayIsImEiOiJaQXc3QUJFIn0.nLL2yBYQbAQfhMBC-FIyXg';
 let map;
 let fixedIssues;
+let unfixedIssies = [];
+let selectedHash = '';
 
 $(document).ready(function () {
     mapboxgl.accessToken = token;
@@ -210,6 +212,15 @@ function mapSetup() {
 }
 
 function redoStatusFilters() {
+    if (fixedIssues.length > 0) {
+        $.each(fixedIssues, function (i, iss) {
+            if (iss && iss.status == 'none') {
+                unfixedIssies.push(iss);
+                fixedIssues.splice(i, 1);
+                console.log(unfixedIssies);
+            }
+        });
+    }
     var fixedFilter = [];
     fixedFilter.push("!in");
     fixedFilter.push("id");
@@ -248,12 +259,27 @@ function setStatus(feature, status, callback) {
 
 function showFeatureDetails(features) {
 
-    let status = '';
+    selectedHash = features[0].properties['id'];
 
+    console.log(features[0]);
+
+
+    let status = '';
+    let note = '';
+    let noteLink = '';
     $.each(fixedIssues, function (i, iss) {
         let id = features[0].properties['id'];
         if (iss.hash == id) {
-            status = '<p class="status-mark-' + iss.status + '">' + iss.status + '</p>'
+            status = '<p class="status-mark-' + iss.status + '">' + iss.status + '</p>';
+        }
+
+    });
+
+    $.each(unfixedIssies, function (i, iss) {
+        let id = features[0].properties['id'];
+        if (iss.hash == id) {
+            note = iss.note;
+            noteLink = 'https://master.apis.dev.openstreetmap.org/note/' + iss.noteId;
         }
     });
 
@@ -299,6 +325,23 @@ function showFeatureDetails(features) {
     }
 
 
+    if (note != '') {
+        document.getElementById('features').innerHTML += `
+            <hr>
+            <div class="alert alert-warning" role="alert">
+                ${note}
+                <a style="font-size: 0.7em" href="${noteLink}">Link to note</a>
+            </div>
+        `;
+    } else {
+        document.getElementById('features').innerHTML += `
+        <hr>
+            <div class="text-center">
+                <button style="font-size: 0.7em" data-toggle="modal" data-target="#noteModal">Add a note to this issue</button>
+            </div>
+        `;
+    }
+
 
 
     document.getElementById('features').innerHTML += `
@@ -317,22 +360,7 @@ function showFeatureDetails(features) {
         });
     });
 
-    document.getElementById('authenticate').onclick = function () {
-        auth.authenticate(function () {
-            update();
-            hideSidePanel();
-            showFeatureDetails(features);
-            showSidePanel();
-        });
-    };
 
-    document.getElementById('logout').onclick = function () {
-        auth.logout();
-        update();
-        hideSidePanel();
-        showFeatureDetails(features);
-        showSidePanel();
-    };
 
 
     $('#fixedStatus').click(
@@ -393,6 +421,7 @@ function showFeatureDetails(features) {
 }
 
 function hideSidePanel() {
+    selectedHash = '';
     document.getElementById("features").style.width = "0px";
     document.getElementById("features").style.padding = "0px";
     document.getElementById("features").style.paddingTop = "0px";
@@ -403,3 +432,56 @@ function showSidePanel() {
     document.getElementById("features").style.padding = "30px";
     document.getElementById("features").style.paddingTop = "90px";
 }
+
+
+document.getElementById('authenticate').onclick = function () {
+    auth.authenticate(function () {
+        update();
+        hideSidePanel();
+        showFeatureDetails(features);
+        showSidePanel();
+    });
+};
+
+document.getElementById('logout').onclick = function () {
+    auth.logout();
+    update();
+    hideSidePanel();
+    showFeatureDetails(features);
+    showSidePanel();
+};
+
+
+
+
+//sumbit note form
+
+$("#addNoteForm").submit(function (event) {
+    console.log("form submitted");
+    console.log($("textarea:first").val());
+
+    let token = localStorage.getItem('https://www.openstreetmap.orgoauth_token');
+    let secret = localStorage.getItem('https://www.openstreetmap.orgoauth_token_secret');
+
+    let data = {
+        c_key: consumer_key,
+        c_scrt: consumer_secret,
+        token: token.slice(1, -1),
+        secret: secret.slice(1, -1),
+        "lat": 12,
+        "lon": 2,
+        "text": $("textarea:first").val(),
+        "hash": selectedHash
+    };
+
+    $.ajax({
+        type: "POST",
+        url: url + 'notes',
+        data: data,
+        success: function(data){
+            console.log(data);
+        },
+        dataType: 'json'
+    });
+    event.preventDefault();
+});

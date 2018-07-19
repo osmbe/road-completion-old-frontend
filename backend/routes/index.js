@@ -14,19 +14,12 @@ router.get('/ISSUE/:hash', (req, res, next) => {
   Issue.findOne({ "hash": req.params.hash }, (err, issue) => {
     if (err) return next(err);
     if (!issue) return next(new Error('Not found ' + req.params.id));
-    //res.send('Got an issue?');
     res.json(issue);
   });
 });
 
 // Post an issue
 router.post('/ISSUE/', (req, res, next) => {
-
-  console.log(req.body.c_key);
-  console.log(req.body.c_scrt);
-  console.log(req.body.token);
-  console.log(req.body.secret);
-
 
   request.get({
     url: 'https://www.openstreetmap.org/api/0.6/user/details',

@@ -24,12 +24,12 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <button  class="nav-link login-btn" id='authenticate'>login</button>
+                    <button class="nav-link login-btn" id='authenticate'>login</button>
                 </li>
                 <li class="nav-item dropdown" id="user">
-                    <a  id='display_name' class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                    <a id='display_name' class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
-                        
+
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <button class="dropdown-item" id='logout'>Logout</button>
@@ -49,6 +49,33 @@
         <a href="#" id="satellite-style" class="btn btn-default">Satellite</a>
     </footer>
 
+
+    <div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add a note</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="addNoteForm">
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label for="note">Note:</label>
+                            <textarea class="form-control" id="note" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save note</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- bootstrap and jquery links -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
@@ -61,8 +88,8 @@
     <script>
         const consumer_secret = '9WfJnwQxDvvYagx1Ut0tZBsOZ0ZCzAvOje3u1TV0';
         const consumer_key = 'WLwXbm6XFMG7WrVnE8enIF6GzyefYIN6oUJSxG65';
-</script>
-    
+    </script>
+
     <script src='js/osmauth.js'></script>
     <script src="js/auth-layout.js"></script>
     <script src="js/main.js"></script>
