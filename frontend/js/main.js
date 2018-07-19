@@ -528,6 +528,8 @@ $("#addNoteForm").submit(function (event) {
                     </div>
                 `;
             }
+
+            $("textarea:first").val('')
         },
         dataType: 'json'
     });
