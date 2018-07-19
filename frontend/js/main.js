@@ -320,6 +320,27 @@ function showFeatureDetails(features) {
             </div>
         `;
 
+
+        if (note != '') {
+            document.getElementById('features').innerHTML += `
+                <hr>
+                <div id="noteDiv">
+                    <div id="noteAlert" class="alert alert-warning" role="alert">
+                        ${note}
+                        <a style="font-size: 0.7em" href="${noteLink}">Link to note</a>
+                    </div>
+                </div>
+            `;
+        } else {
+            document.getElementById('features').innerHTML += `
+            <hr>
+                <div id="noteDiv">
+                    <div id="noteAlert" class="text-center">
+                        <button style="font-size: 0.7em" data-toggle="modal" data-target="#noteModal">Add a note to this issue</button>
+                    </div>
+                </div>
+            `;
+        }
     } else {
         document.getElementById('features').innerHTML += `
             <hr>
@@ -333,26 +354,7 @@ function showFeatureDetails(features) {
     }
 
 
-    if (note != '') {
-        document.getElementById('features').innerHTML += `
-            <hr>
-            <div id="noteDiv">
-                <div id="noteAlert" class="alert alert-warning" role="alert">
-                    ${note}
-                    <a style="font-size: 0.7em" href="${noteLink}">Link to note</a>
-                </div>
-            </div>
-        `;
-    } else {
-        document.getElementById('features').innerHTML += `
-        <hr>
-            <div id="noteDiv">
-                <div id="noteAlert" class="text-center">
-                    <button style="font-size: 0.7em" data-toggle="modal" data-target="#noteModal">Add a note to this issue</button>
-                </div>
-            </div>
-        `;
-    }
+    
 
 
 
@@ -488,6 +490,8 @@ $("#addNoteForm").submit(function (event) {
         "hash": selectedHash
     };
 
+    $('#noteProgress').attr('aria-valuenow', 500).css('width',500);
+    
     $.ajax({
         type: "POST",
         url: url + 'notes',

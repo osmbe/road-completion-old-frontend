@@ -119,3 +119,31 @@ footer a{
 .modal-dialog{
     margin-top: 150px;
 }
+
+#noteAlert button{
+    width: 100%;
+    padding: 15px;
+    border-radius: 0.25rem;
+    border: none;
+    color: white;
+    font-weight: bold;
+    background-color: #7ed0ff;
+}
+
+#noteAlert button:hover{
+    cursor: pointer;
+    width: 100%;
+    padding: 15px;
+    border-radius: 0.25rem;
+    border: none;
+    color: white;
+    
+    background-color: #5cc2fd;
+}
+
+
+
+#noteProgress{
+    width: 0%;
+    transition: all 0.1s;
+}
