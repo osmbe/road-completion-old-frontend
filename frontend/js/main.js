@@ -299,8 +299,8 @@ function showFeatureDetails(features) {
         <h2 class="slide-text">Info</h2>`+ status + `
     </div>`;
     document.getElementById('features').innerHTML += '<hr>';
-    document.getElementById('features').innerHTML += '<p class="slide-text"><b>Street: </b>' + features[0].properties["orginal:RSTRNM"] + '</p>';
-    document.getElementById('features').innerHTML += '<p class="slide-text"><b>City: </b>' + features[0].properties['orginal:LBLBEHEER'] + '</p>';
+    document.getElementById('features').innerHTML += '<p class="slide-text"><b>Street: </b>' + features[0].properties["PN_NAME_DU"] + '</p>';
+    document.getElementById('features').innerHTML += '<p class="slide-text"><b>City: </b>' + features[0].properties['PZ_NAT_COD']+ ', '+features[0].properties['MU_NAME_DU'] + '</p>';
     document.getElementById('features').innerHTML += '<a target="_blank" href="https://www.openstreetmap.org/edit#map=' + map.getZoom() * 1.1 + '/' + map.getCenter()["lat"] + '/' + map.getCenter()["lng"] + '" class="edit-btn btn btn-primary">Edit</a>';
 
 
@@ -514,6 +514,7 @@ $("#addNoteForm").submit(function (event) {
                         <a style="font-size: 0.7em" href="${noteLink}">Link to note</a>
                     </div>
                 `;
+                getData();
             } else {
                 document.getElementById('noteDiv').innerHTML = `
                     <div id="noteAlert" class="text-center">
