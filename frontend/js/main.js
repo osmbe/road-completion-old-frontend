@@ -6,6 +6,7 @@ let unfixedIssies = [];
 let selectedHash = '';
 
 $(document).ready(function () {
+
     mapboxgl.accessToken = token;
 
     map = new mapboxgl.Map({
@@ -47,8 +48,13 @@ $(document).ready(function () {
 
     $.get(url + "ISSUES", function (data) {
         fixedIssues = data;
-        mapSetup();
+        $.get(url + "NONEISSUES", function (data2) {
+            unfixedIssies = data2;
+            console.log('fixed:' + fixedIssues);
+            console.log('unfixxed:' + unfixedIssies);
 
+        });
+        mapSetup();
     });
 
 
@@ -59,14 +65,23 @@ $(document).ready(function () {
 function getData() {
     $.get(url + "ISSUES", function (data) {
         fixedIssues = data;
+        $.get(url + "NONEISSUES", function (data2) {
+            unfixedIssies = data2;
+            redoStatusFilters();
+            console.log('fixed:' + fixedIssues);
+            console.log('unfixxed:' + unfixedIssies);
 
-        redoStatusFilters();
+        });
     });
+
+
+
+
 }
 
 function mapSetup() {
     // Add zoom and rotation controls to the map.
-    map.addControl(new mapboxgl.NavigationControl());
+    map.addControl(new mapboxgl.NavigationControl(), 'top-left');
 
     map.on("load", function () {
 
@@ -212,15 +227,8 @@ function mapSetup() {
 }
 
 function redoStatusFilters() {
-    if (fixedIssues.length > 0) {
-        $.each(fixedIssues, function (i, iss) {
-            if (iss && iss.status == 'none') {
-                unfixedIssies.push(iss);
-                fixedIssues.splice(i, 1);
-                console.log(unfixedIssies);
-            }
-        });
-    }
+
+
     var fixedFilter = [];
     fixedFilter.push("!in");
     fixedFilter.push("id");
@@ -328,16 +336,20 @@ function showFeatureDetails(features) {
     if (note != '') {
         document.getElementById('features').innerHTML += `
             <hr>
-            <div class="alert alert-warning" role="alert">
-                ${note}
-                <a style="font-size: 0.7em" href="${noteLink}">Link to note</a>
+            <div id="noteDiv">
+                <div id="noteAlert" class="alert alert-warning" role="alert">
+                    ${note}
+                    <a style="font-size: 0.7em" href="${noteLink}">Link to note</a>
+                </div>
             </div>
         `;
     } else {
         document.getElementById('features').innerHTML += `
         <hr>
-            <div class="text-center">
-                <button style="font-size: 0.7em" data-toggle="modal" data-target="#noteModal">Add a note to this issue</button>
+            <div id="noteDiv">
+                <div id="noteAlert" class="text-center">
+                    <button style="font-size: 0.7em" data-toggle="modal" data-target="#noteModal">Add a note to this issue</button>
+                </div>
             </div>
         `;
     }
@@ -460,6 +472,8 @@ $("#addNoteForm").submit(function (event) {
     console.log("form submitted");
     console.log($("textarea:first").val());
 
+    event.preventDefault();
+
     let token = localStorage.getItem('https://www.openstreetmap.orgoauth_token');
     let secret = localStorage.getItem('https://www.openstreetmap.orgoauth_token_secret');
 
@@ -478,10 +492,32 @@ $("#addNoteForm").submit(function (event) {
         type: "POST",
         url: url + 'notes',
         data: data,
-        success: function(data){
+        success: function (data) {
+
+
+            let note = '';
+            let noteLink = '';
             console.log(data);
+
+            note = data.note;
+            noteLink = 'https://master.apis.dev.openstreetmap.org/note/' + data.noteId;
+
+            $('#noteModal').modal('hide');
+            if (note != '') {
+                document.getElementById('noteDiv').innerHTML = `
+                    <div id="noteAlert" class="alert alert-warning" role="alert">
+                        ${note}
+                        <a style="font-size: 0.7em" href="${noteLink}">Link to note</a>
+                    </div>
+                `;
+            } else {
+                document.getElementById('noteDiv').innerHTML = `
+                    <div id="noteAlert" class="text-center">
+                        <button style="font-size: 0.7em" data-toggle="modal" data-target="#noteModal">Add a note to this issue</button>
+                    </div>
+                `;
+            }
         },
         dataType: 'json'
     });
-    event.preventDefault();
 });

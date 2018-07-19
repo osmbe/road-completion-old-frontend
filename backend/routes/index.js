@@ -75,9 +75,14 @@ router.post('/ISSUE/', (req, res, next) => {
 
 // Return all issues
 router.get('/ISSUES/', (req, res, next) => {
-  Issue.find((err, issues) => {
-    if (err) return next(err);
-    res.json(issues);
+  Issue.find({ "status": "fixed" }, (err, iss) => {
+    res.json(iss);
+  });
+});
+
+router.get('/NONEISSUES/', (req, res, next) => {
+  Issue.find({ "status": "none" }, (err, iss) => {
+    res.json(iss);
   });
 });
 
