@@ -4,6 +4,7 @@ let map;
 let fixedIssues;
 let unfixedIssies = [];
 let selectedHash = '';
+let selectedFeature = null;
 
 $(document).ready(function () {
 
@@ -50,8 +51,6 @@ $(document).ready(function () {
         fixedIssues = data;
         $.get(url + "NONEISSUES", function (data2) {
             unfixedIssies = data2;
-            console.log('fixed:' + fixedIssues);
-            console.log('unfixxed:' + unfixedIssies);
 
         });
         mapSetup();
@@ -68,8 +67,6 @@ function getData() {
         $.get(url + "NONEISSUES", function (data2) {
             unfixedIssies = data2;
             redoStatusFilters();
-            console.log('fixed:' + fixedIssues);
-            console.log('unfixxed:' + unfixedIssies);
 
         });
     });
@@ -268,8 +265,8 @@ function setStatus(feature, status, callback) {
 function showFeatureDetails(features) {
 
     selectedHash = features[0].properties['id'];
-
-    console.log(features[0]);
+    selectedFeature = features[0];
+    console.log(get_polygon_centroid(features[0].geometry.coordinates));
 
 
     let status = '';
@@ -327,7 +324,7 @@ function showFeatureDetails(features) {
                 <div id="noteDiv">
                     <div id="noteAlert" class="alert alert-warning" role="alert">
                         ${note}
-                        <a style="font-size: 0.7em" href="${noteLink}">Link to note</a>
+                        <a style="font-size: 0.7em" href="${noteLink}" target="_blank">Link to note</a>
                     </div>
                 </div>
             `;
@@ -436,6 +433,7 @@ function showFeatureDetails(features) {
 
 function hideSidePanel() {
     selectedHash = '';
+    selectedFeature = null;
     document.getElementById("features").style.width = "0px";
     document.getElementById("features").style.padding = "0px";
     document.getElementById("features").style.paddingTop = "0px";
@@ -478,17 +476,25 @@ $("#addNoteForm").submit(function (event) {
 
     let token = localStorage.getItem('https://www.openstreetmap.orgoauth_token');
     let secret = localStorage.getItem('https://www.openstreetmap.orgoauth_token_secret');
+    let centeroid = get_polygon_centroid(selectedFeature.geometry.coordinates);
+    let lon = centeroid.geometry.coordinates[0];
+    let lat = centeroid.geometry.coordinates[1];
 
     let data = {
         c_key: consumer_key,
         c_scrt: consumer_secret,
         token: token.slice(1, -1),
         secret: secret.slice(1, -1),
-        "lat": 12,
-        "lon": 2,
+        "lat": lat,
+        "lon": lon,
         "text": $("textarea:first").val(),
         "hash": selectedHash
     };
+
+    console.log(data);
+    
+
+    
 
     $('#noteProgress').attr('aria-valuenow', 500).css('width',500);
     
@@ -511,7 +517,7 @@ $("#addNoteForm").submit(function (event) {
                 document.getElementById('noteDiv').innerHTML = `
                     <div id="noteAlert" class="alert alert-warning" role="alert">
                         ${note}
-                        <a style="font-size: 0.7em" href="${noteLink}">Link to note</a>
+                        <a style="font-size: 0.7em" href="${noteLink}" target="_blank">Link to note</a>
                     </div>
                 `;
                 getData();
@@ -526,3 +532,13 @@ $("#addNoteForm").submit(function (event) {
         dataType: 'json'
     });
 });
+
+function get_polygon_centroid(pts) {    
+    try{
+        var polygon = turf.polygon(pts);
+        return center =  turf.centroid(polygon);
+    }catch(err){
+        var polygon = turf.polygon(pts[0]);
+        return center =  turf.centroid(polygon);
+    }
+ }
