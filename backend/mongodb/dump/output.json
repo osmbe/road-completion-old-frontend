@@ -3,3 +3,6 @@
 {"_id":{"$oid":"5b55dd07decc62001b6a2173"},"hash":"2120406960","status":"fixed","street":"Henri Fricksquare","city":"Sint-Joost-ten-Node","userId":"8493994","__v":0}
 {"_id":{"$oid":"5b55dd0bdecc62001b6a2174"},"hash":"1191980197","status":"fixed","street":"Henri Fricksquare","city":"Sint-Joost-ten-Node","userId":"8493994","__v":0}
 {"_id":{"$oid":"5b55dd14decc62001b6a2175"},"hash":"-1194257929","status":"fixed","street":"Koninginneplein","city":"Schaarbeek","userId":"8493994","__v":0}
+{"_id":{"$oid":"5b55de17decc62001b6a2176"},"hash":"1827666573","status":"fixed","street":"Maria-Louizasquare","city":"Brussel","userId":"8504164","__v":0}
+{"_id":{"$oid":"5b55de25decc62001b6a2177"},"hash":"-2003420114","status":"fixed","street":"Maria-Louizasquare","city":"Brussel","userId":"8504164","__v":0}
+{"_id":{"$oid":"5b55de42decc62001b6a2178"},"hash":"-278920336","status":"false-pos","street":"Margaretasquare","city":"Brussel","userId":"8504164","__v":0}
