@@ -1,0 +1,4 @@
+{"_id":{"$oid":"5b55d80e352b7e001b5b8f4b"},"hash":"2120406960","status":"fixed","street":"Henri Fricksquare","city":"Sint-Joost-ten-Node","userId":"8493994","__v":0}
+{"_id":{"$oid":"5b55d812352b7e001b5b8f4c"},"hash":"-1194257929","status":"fixed","street":"Koninginneplein","city":"Schaarbeek","userId":"8493994","__v":0}
+{"_id":{"$oid":"5b55d816352b7e001b5b8f4d"},"hash":"1983717058","status":"fixed","street":"Emile DuployÃ©square","city":"Schaarbeek","userId":"8493994","__v":0}
+{"_id":{"$oid":"5b55d819352b7e001b5b8f4e"},"hash":"1330141550","status":"fixed","street":"Paul Deschanellaan","city":"Schaarbeek","userId":"8493994","__v":0}
