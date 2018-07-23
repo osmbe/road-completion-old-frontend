@@ -27,12 +27,15 @@ router.post('/ISSUE/', (req, res, next) => {
       consumer_key: req.body.c_key,
       consumer_secret: req.body.c_scrt,
       token: req.body.token,
-      token_secret: req.body.secret
+      token_secret: req.body.secret,
+      
     }
   }, function (e, r, body) {
 
     if (body != "Couldn't authenticate you") {
       let issue = new Issue(req.body);
+      issue.userId = req.body.user_id;
+
       Issue.findOne({ "hash": issue.hash }, (err, iss) => {
 
         if (err)
@@ -63,6 +66,42 @@ router.post('/ISSUE/', (req, res, next) => {
             }
           );
         }
+      });
+    }else{
+      res.statusCode = 401;
+      res.send('Not authenticated');
+    }
+
+  });
+
+});
+
+
+//get set status issue by user
+router.post('/ISSUE/USER/', (req, res, next) => {
+
+  request.get({
+    url: 'https://www.openstreetmap.org/api/0.6/user/details',
+    oauth: {
+      consumer_key: req.body.c_key,
+      consumer_secret: req.body.c_scrt,
+      token: req.body.token,
+      token_secret: req.body.secret,
+    }
+  }, function (e, r, body) {
+
+    if (body != "Couldn't authenticate you") {
+
+      Issue.findOne({ "userId": req.body.user_id }, (err, iss) => {
+
+        if (err)
+          return next(err);
+
+        if (iss) {
+
+          res.json(iss);
+ 
+        } 
       });
     }else{
       res.statusCode = 401;
