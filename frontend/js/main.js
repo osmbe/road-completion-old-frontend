@@ -1,4 +1,4 @@
-const url = "http://localhost:3000/API/";
+const url = "https://road-completion.osm.be/backend/API/";
 const token = 'pk.eyJ1IjoieGl2ayIsImEiOiJaQXc3QUJFIn0.nLL2yBYQbAQfhMBC-FIyXg';
 let map;
 let fixedIssues;
@@ -93,15 +93,6 @@ function mapSetup() {
             }
         }
 
-        // replace road tiles with road tiles for this instance.
-        map.addSource("buffers", {
-            "type": "vector",
-            "tiles": [
-                "http://roads-tiles.osm.be/data/buffers/{z}/{x}/{y}.pbf"
-            ],
-            "maxzoom": 14
-        });
-
         map.addSource("diffs", {
             "type": "vector",
             "tiles": [
@@ -111,17 +102,6 @@ function mapSetup() {
             "maxzoom": 14
         });
 
-        map.addLayer({
-            "id": "buffers",
-            "source": "buffers",
-            "source-layer": "buffers",
-            "type": "fill",
-            "paint": {
-                "fill-color": "blue",
-                "fill-opacity": 0.05
-            },
-            "minzoom": 14
-        }, firstSymbolId);
 
         map.addLayer({
             "id": "diffs-details",
