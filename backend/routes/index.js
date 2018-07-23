@@ -92,7 +92,7 @@ router.post('/ISSUE/USER/', (req, res, next) => {
 
     if (body != "Couldn't authenticate you") {
 
-      Issue.findOne({ "userId": req.body.user_id }, (err, iss) => {
+      Issue.find({ "userId": req.body.user_id }, (err, iss) => {
 
         if (err)
           return next(err);
@@ -114,7 +114,7 @@ router.post('/ISSUE/USER/', (req, res, next) => {
 
 // Return all issues
 router.get('/ISSUES/', (req, res, next) => {
-  Issue.find({ "status": "fixed" }, (err, iss) => {
+  Issue.find({ $or: [ { 'status': 'fixed' }, { 'status': 'false-pos'} ] }, (err, iss) => {
     res.json(iss);
   });
 });

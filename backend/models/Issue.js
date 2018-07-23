@@ -6,7 +6,9 @@ var IssueSchema = new mongoose.Schema
     hash: String,
     noteId: String,
     note: String,
-    userId: String
+    userId: String,
+    street: String,
+    city: String
 });
 
 // TODO: CREATE METHOD TO REPLACE AN ISSUE'S ID WITH A CUSTOM HASH

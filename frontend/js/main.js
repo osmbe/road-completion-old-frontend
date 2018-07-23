@@ -1,4 +1,6 @@
-const url = "https://road-completion.osm.be/backend/API/";
+//const url = "https://road-completion.osm.be/backend/API/";
+const url = "http://localhost:3000/API/";
+
 const token = 'pk.eyJ1IjoieGl2ayIsImEiOiJaQXc3QUJFIn0.nLL2yBYQbAQfhMBC-FIyXg';
 let map;
 let fixedIssues;
@@ -228,7 +230,9 @@ function setStatus(feature, status, callback) {
         c_scrt: consumer_secret,
         token: token.slice(1, -1),
         secret: secret.slice(1, -1),
-        user_id: userid
+        user_id: userid,
+        street: feature.properties["PN_NAME_DU"],
+        city: feature.properties['MU_NAME_DU']
     };
 
     $.ajax({
