@@ -3,6 +3,8 @@ var auth = osmAuth({
     oauth_consumer_key: consumer_key
 });
 
+let userid;
+
 function done(err, res) {
     if (err) {
         document.getElementById('user').innerHTML = 'error! try clearing your browser cache';
@@ -10,6 +12,8 @@ function done(err, res) {
         return;
     }
     var u = res.getElementsByTagName('user')[0];
+    userid = u.getAttribute('id'); 
+    localStorage.setItem("userid",userid);   
     var o = {
         display_name: u.getAttribute('display_name')
     };

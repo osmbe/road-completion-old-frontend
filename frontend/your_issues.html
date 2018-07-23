@@ -24,7 +24,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a href="your_issues.html" class="nav-link">Your issues</a>
+                    <a class="nav-link">Your issues</a>
                 </li>
                 <li class="nav-item">
                     <button class="nav-link login-btn" id='authenticate'>login</button>
@@ -42,43 +42,25 @@
         </div>
     </nav>
 
-    <div id='map'></div>
-    <div id='features'>
-    </div>
+    <div class="container">
+        <div class="col-md-12 text-center" style="padding: 25px;">
+            <h1>Your Fixes:</h1>
+            <hr>
+        </div>
 
-
-    <footer class="text-center">
-        <a href="#" id="default-style" class="btn btn-default">Default</a>
-        <a href="#" id="satellite-style" class="btn btn-default">Satellite</a>
-    </footer>
-
-
-    <div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add a note</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form id="addNoteForm">
-                    <div class="modal-body">
-
-                        <div class="form-group">
-                            <label for="note">Note:</label>
-                            <textarea class="form-control" id="note" rows="3"></textarea>
-                        </div>
-                        <div class="progress">
-                            <div id="noteProgress" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save note</button>
-                    </div>
-                </form>
-            </div>
+        <div class="col-md-12">
+                <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Street</th>
+                            <th scope="col">City</th>
+                            <th scope="col">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody id="fixes">
+                        </tbody>
+                      </table>
         </div>
     </div>
 
@@ -101,7 +83,7 @@
 
     <script src='js/osmauth.js'></script>
     <script src="js/auth-layout.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/your_fixes.js"></script>
 </body>
 
 </html>

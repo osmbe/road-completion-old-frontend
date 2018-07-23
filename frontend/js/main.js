@@ -247,7 +247,8 @@ function setStatus(feature, status, callback) {
         c_key: consumer_key,
         c_scrt: consumer_secret,
         token: token.slice(1, -1),
-        secret: secret.slice(1, -1)
+        secret: secret.slice(1, -1),
+        user_id: userid
     };
 
     $.ajax({
