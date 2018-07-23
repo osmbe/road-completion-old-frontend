@@ -6,7 +6,22 @@ let fixedIssues;
 
 $(document).ready(function () {
     getData();
+    handleLogin();
 });
+
+function handleLogin(){
+    document.getElementById('authenticate').onclick = function () {
+        auth.authenticate(function () {
+            update();
+        });
+    };
+    
+    document.getElementById('logout').onclick = function () {
+        auth.logout();
+        window.location.href = "index.html"
+        update();
+    };
+}
 
 
 function getData() {
@@ -65,3 +80,4 @@ function empty(){
 
     tbody.append(tr);
 }
+

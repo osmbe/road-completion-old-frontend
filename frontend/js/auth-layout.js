@@ -27,7 +27,8 @@ function update() {
     if (auth.authenticated()) {
         document.getElementById('authenticate').className = 'd-none';
         document.getElementById('logout').className = 'nav-link login-btn';
-        
+        document.getElementById('your-issues').style.display = 'block';
+
         auth.xhr({
             method: 'GET',
             path: '/api/0.6/user/details'
@@ -36,6 +37,7 @@ function update() {
     } else {
         document.getElementById('authenticate').className = 'nav-link login-btn';
         document.getElementById('logout').className = 'd-none';
+        document.getElementById('your-issues').style.display = 'none';
         document.getElementById('user').style.display = 'none';
     }
 }
