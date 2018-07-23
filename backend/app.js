@@ -11,8 +11,8 @@ var app = express();
 let cors = require('cors');
 
 
-mongoose.connect('mongodb://osoctest:osoc123@ds139890.mlab.com:39890/osoc18road',{ useNewUrlParser: true });
-//mongoose.connect('mongodb://localhost:27017/osoc18road',{ useNewUrlParser: true });
+//mongoose.connect('mongodb://osoctest:osoc123@ds139890.mlab.com:39890/osoc18road',{ useNewUrlParser: true });
+mongoose.connect('mongodb://mongo:27017/osoc18',{ useNewUrlParser: true });
 
 
 mongoose.connection.on("open", (ref) => {
