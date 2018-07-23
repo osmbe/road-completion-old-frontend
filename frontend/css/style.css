@@ -111,6 +111,15 @@ footer a{
     border: none;
 }
 
+.login-btn:hover{
+    cursor: pointer;
+}
+
+#logout{
+    cursor: pointer;
+    color: rgb(26, 26, 26)
+}
+
 .mapboxgl-ctrl-top-left .mapboxgl-ctrl{
     margin-top: 75px;
     margin-left: 15px;
