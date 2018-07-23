@@ -1,5 +1,5 @@
-//const url = "https://road-completion.osm.be/backend/API/";
-const url = "http://localhost:3000/API/";
+const url = "https://road-completion.osm.be/backend/API/";
+//const url = "http://localhost:3000/API/";
 
 const token = 'pk.eyJ1IjoieGl2ayIsImEiOiJaQXc3QUJFIn0.nLL2yBYQbAQfhMBC-FIyXg';
 let map;

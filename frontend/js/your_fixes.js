@@ -1,4 +1,5 @@
-const url = "http://localhost:3000/API/";
+//const url = "http://localhost:3000/API/";
+const url = "https://road-completion.osm.be/backend/API/";
 let fixedIssues;
 
 
