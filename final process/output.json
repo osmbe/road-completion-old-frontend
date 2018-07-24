@@ -1,0 +1,298 @@
+[
+    {
+        "_id": {
+            "$oid": "5b55dcf8decc62001b6a2171"
+        },
+        "hash": "1330141550",
+        "status": "fixed",
+        "street": "Paul Deschanellaan",
+        "city": "Schaarbeek",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b55dd01decc62001b6a2172"
+        },
+        "hash": "535245538",
+        "status": "false-pos",
+        "street": "FÃ©lix Delhayesquare",
+        "city": "Sint-Joost-ten-Node",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b55dd07decc62001b6a2173"
+        },
+        "hash": "2120406960",
+        "status": "fixed",
+        "street": "Henri Fricksquare",
+        "city": "Sint-Joost-ten-Node",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b55dd0bdecc62001b6a2174"
+        },
+        "hash": "1191980197",
+        "status": "fixed",
+        "street": "Henri Fricksquare",
+        "city": "Sint-Joost-ten-Node",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b55dd14decc62001b6a2175"
+        },
+        "hash": "-1194257929",
+        "status": "fixed",
+        "street": "Koninginneplein",
+        "city": "Schaarbeek",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b55de17decc62001b6a2176"
+        },
+        "hash": "1827666573",
+        "status": "fixed",
+        "street": "Maria-Louizasquare",
+        "city": "Brussel",
+        "userId": "8504164",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b55de25decc62001b6a2177"
+        },
+        "hash": "-2003420114",
+        "status": "fixed",
+        "street": "Maria-Louizasquare",
+        "city": "Brussel",
+        "userId": "8504164",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b55de42decc62001b6a2178"
+        },
+        "hash": "-278920336",
+        "status": "false-pos",
+        "street": "Margaretasquare",
+        "city": "Brussel",
+        "userId": "8504164",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b55e0c1decc62001b6a2179"
+        },
+        "hash": "1270454520",
+        "status": "difficult",
+        "street": "Koninginneplein",
+        "city": "Schaarbeek",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b56cd36decc62001b6a217a"
+        },
+        "hash": "1535868443",
+        "status": "false-pos",
+        "street": "Park van Brussel",
+        "city": "Brussel",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b56cd53decc62001b6a217b"
+        },
+        "hash": "-1479800749",
+        "status": "fixed",
+        "street": "Jubelpark",
+        "city": "Brussel",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b56cd5ddecc62001b6a217c"
+        },
+        "hash": "-686927945",
+        "status": "false-pos",
+        "street": "Park Leopold",
+        "city": "Brussel",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b56cd64decc62001b6a217d"
+        },
+        "hash": "250430039",
+        "status": "false-pos",
+        "street": "Jubelpark",
+        "city": "Etterbeek",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b56cd72decc62001b6a217e"
+        },
+        "hash": "-2024840621",
+        "status": "false-pos",
+        "street": "Jubelpark",
+        "city": "Brussel",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b56cd78decc62001b6a2180"
+        },
+        "hash": "-1644915327",
+        "status": "false-pos",
+        "street": "Jubelpark",
+        "city": "Etterbeek",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b56cd85decc62001b6a2181"
+        },
+        "hash": "-1324603853",
+        "status": "false-pos",
+        "street": "Astrid Park",
+        "city": "Anderlecht",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b56cd90decc62001b6a2182"
+        },
+        "hash": "-228409950",
+        "status": "false-pos",
+        "street": "Astrid Park",
+        "city": "Anderlecht",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b56cdacdecc62001b6a2183"
+        },
+        "hash": "-243126423",
+        "status": "false-pos",
+        "street": "Kazernen Rollin en GÃ©ruzet",
+        "city": "Etterbeek",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b56cdb4decc62001b6a2184"
+        },
+        "hash": "1419365009",
+        "status": "false-pos",
+        "street": "Kazernen Rollin en GÃ©ruzet",
+        "city": "Etterbeek",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b56cdc1decc62001b6a2185"
+        },
+        "hash": "-828685648",
+        "status": "false-pos",
+        "street": "Kazerne Baron de Witte de Haelen",
+        "city": "Etterbeek",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b56cdecdecc62001b6a2186"
+        },
+        "hash": "1839446336",
+        "status": "fixed",
+        "street": "Verbondsstraat",
+        "city": "Sint-Joost-ten-Node",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b56cdfcdecc62001b6a2187"
+        },
+        "status": "none",
+        "hash": "-582689469",
+        "note": "lmdsfjqdf",
+        "noteId": "12017",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b56ce5edecc62001b6a2188"
+        },
+        "hash": "1120810215",
+        "status": "false-pos",
+        "street": "Elisabethpark",
+        "city": "Koekelberg",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b56ce74decc62001b6a2189"
+        },
+        "hash": "178639934",
+        "status": "false-pos",
+        "street": "Elisabethpark",
+        "city": "Ganshoren",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b56ce80decc62001b6a218a"
+        },
+        "hash": "-1029947449",
+        "status": "fixed",
+        "street": "Elisabethpark",
+        "city": "Koekelberg",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b56cedcdecc62001b6a218b"
+        },
+        "hash": "-163974024",
+        "status": "false-pos",
+        "street": "Ambiorixsquare",
+        "city": "Brussel",
+        "userId": "8493994",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5b56cfb0decc62001b6a218c"
+        },
+        "hash": "1041503730",
+        "status": "false-pos",
+        "street": "Vaartdijk",
+        "city": "Brussel",
+        "userId": "8493994",
+        "__v": 0
+    }
+]
