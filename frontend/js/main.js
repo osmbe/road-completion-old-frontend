@@ -231,8 +231,8 @@ function setStatus(feature, status, callback) {
         token: token.slice(1, -1),
         secret: secret.slice(1, -1),
         user_id: userid,
-        street: feature.properties["PN_NAME_DU"],
-        city: feature.properties['MU_NAME_DU']
+        street: feature.properties.name,
+        city: feature.properties.postal_code
     };
 
     $.ajax({
@@ -251,7 +251,7 @@ function showFeatureDetails(features) {
 
     selectedHash = features[0].properties['id'];
     selectedFeature = features[0];
-    console.log(get_polygon_centroid(features[0].geometry.coordinates));
+    //console.log(get_polygon_centroid(features[0].geometry.coordinates));
 
 
     let status = '';
@@ -274,15 +274,19 @@ function showFeatureDetails(features) {
     });
 
 
-
+    console.log(features[0].properties);
+    
 
     document.getElementById('features').innerHTML = `
     <div id="slidehead" class="slide-head">
         <h2 class="slide-text">Info</h2>`+ status + `
     </div>`;
     document.getElementById('features').innerHTML += '<hr>';
-    document.getElementById('features').innerHTML += '<p class="slide-text"><b>Street: </b>' + features[0].properties["PN_NAME_DU"] + '</p>';
-    document.getElementById('features').innerHTML += '<p class="slide-text"><b>City: </b>' + features[0].properties['PZ_NAT_COD']+ ', '+features[0].properties['MU_NAME_DU'] + '</p>';
+    document.getElementById('features').innerHTML += '<p class="slide-text"><b>Street: </b>' + features[0].properties.name + '</p>';
+  
+    document.getElementById('features').innerHTML += '<p class="slide-text"><b>Postalcode: </b>' + features[0].properties.postal_code + '</p>';
+
+  
     document.getElementById('features').innerHTML += '<a target="_blank" href="https://www.openstreetmap.org/edit#map=' + map.getZoom() * 1.1 + '/' + map.getCenter()["lat"] + '/' + map.getCenter()["lng"] + '" class="edit-btn btn btn-primary">Edit</a>';
 
 
