@@ -1,6 +1,40 @@
+/*
+1. set main used variables 
+    are you used for setting selected features and urls
+
+2. initialize mapbox and setup the map
+    also handles style changes (eg default and satellite)
+
+3. get data method
+
+4. map setup method 
+    loads data into mapbox layers
+
+5. redoStatusFilters method
+    hides already fixed issues
+
+6. setStatus method
+    sets a status for an issue (also authenticates)
+
+7. showFeatureDetails method
+    shows features on a still hidden side panel
+
+8. hideSidePanel method
+    hides the side panel
+
+9. showSidePanel method
+    shows side panel
+
+10. Handle authentication button clicks
+    #authenticate = login button
+
+11. Handle note form
+    
+12. get_polygon_centroid
+*/
+
 const url = "https://road-completion.osm.be/backend/API/";
 //const url = "http://localhost:3000/API/";
-
 const token = 'pk.eyJ1IjoieGl2ayIsImEiOiJaQXc3QUJFIn0.nLL2yBYQbAQfhMBC-FIyXg';
 let map;
 let fixedIssues;
@@ -61,7 +95,6 @@ $(document).ready(function () {
 
 
 });
-
 
 function getData() {
     $.get(url + "ISSUES", function (data) {
@@ -206,8 +239,6 @@ function mapSetup() {
 }
 
 function redoStatusFilters() {
-
-
     var fixedFilter = [];
     fixedFilter.push("!in");
     fixedFilter.push("id");
@@ -435,8 +466,10 @@ function showSidePanel() {
 }
 
 
+//hande login and logout buttons
 document.getElementById('authenticate').onclick = function () {
     auth.authenticate(function () {
+        //update method is inside auth-layout.js
         update();
         hideSidePanel();
         showFeatureDetails(features);
@@ -445,6 +478,7 @@ document.getElementById('authenticate').onclick = function () {
 };
 
 document.getElementById('logout').onclick = function () {
+    //update method & auth.logout is inside auth-layout.js
     auth.logout();
     update();
     hideSidePanel();
@@ -453,10 +487,7 @@ document.getElementById('logout').onclick = function () {
 };
 
 
-
-
-//sumbit note form
-
+//sumbit note form 
 $("#addNoteForm").submit(function (event) {
     console.log("form submitted");
     console.log($("textarea:first").val());
@@ -524,6 +555,7 @@ $("#addNoteForm").submit(function (event) {
     });
 });
 
+//calculate the center of a polygon by geomotry
 function get_polygon_centroid(pts) {    
     try{
         var polygon = turf.polygon(pts);
