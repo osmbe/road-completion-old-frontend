@@ -28,10 +28,10 @@
                     <a href="index.html" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="manual.html" class="nav-link">Manual</a>
+                    <a href="manual.html" class="nav-link active">Manual</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active">My Fixes</a>
+                    <a class="nav-link">My Fixes</a>
                 </li>
                 <li class="nav-item" id="your-issues">
                     <button class="nav-link login-btn" id='authenticate'>login</button>
@@ -50,24 +50,43 @@
     </nav>
 
     <div class="container">
-        <div class="col-md-12 text-center" style="padding: 25px;">
-            <h1>My Fixes:</h1>
-            <hr>
-        </div>
+        
 
         <div class="col-md-12">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Street</th>
-                        <th scope="col">City</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                </thead>
-                <tbody id="fixes">
-                </tbody>
-            </table>
+
+            <div class="manual-block col-md-8 offset-md-2 text-center">
+                    <h1>Issue</h1>
+                    <img src="img/issue.png" class="img-fluid" width="500" alt="">
+                    <p>Issues are roads or areas that don’t exist in OpenStreetMap. These are the red lines/polygons you find on the map. The goal of this tool is to have a map free of issues.</p>        
+            </div>
+
+            <div class="manual-block col-md-8 offset-md-2 text-center">
+                    <h1>Edit</h1>
+                    <img src="img/edit.png" class="img-fluid" width="400" alt="">
+                    <p>If you click on one of the issues a side bar will appear with more information.<br><br> If you are logged in, you can you set a status and/or create a note for this specific issue.</p>        
+            </div>
+
+            <div class="manual-block col-md-8 offset-md-2 text-center">
+                    <h1>Status</h1>
+                    <img src="img/status.png" class="img-fluid" width="400" alt="">
+                    <p>The status indicates the current state of an issue.<br>The status can be set to fixed, false positive and too difficult.</p>
+                    <p><b>Fixed</b> <br> Indicates the issue has been fixed on OpenStreetMap</p>
+                    <p> <b>False Positive </b> <br> When the issue does not need to be fixed in OpenStreetMap. For example an issue that is not really an issue.</p>
+                    <p><b>Too Difficult</b><br>Indicates that the issue is too difficult to solve with the resources that are currently available.</p>
+            </div>
+
+            <div class="manual-block col-md-8 offset-md-2 text-center">
+                    <h1>Notes</h1>
+                    <img src="img/note.png" class="img-fluid" width="400" alt="">
+                    <p>Notes can be added to a specific issue.<br>
+                        The note added to this issue is connected to OpenStreetMap and will appear at the same location there. <br>Make sure to add detailed information about that issue to help other mappers find better solutions.</p>        
+            </div>
+
+            <div class="manual-block col-md-8 offset-md-2 text-center">
+                    <h1>Map styles</h1>
+                    <img src="img/styles.png" class="img-fluid" width="400" alt="">
+                    <p>Somethimes it is easier to find the location of an issue when looking at a satellite view. <br>Using the buttons on the bottom of the screen you can toggle between Default and Satellite view.</p>        
+            </div>
         </div>
     </div>
 
@@ -91,7 +110,7 @@
     <script src='js/osmauth.js'></script>
     <script src="js/auth-layout.js"></script>
     <script src="js/your_fixes.js"></script>
-    
+
 </body>
 
 </html>

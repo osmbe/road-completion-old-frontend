@@ -156,3 +156,11 @@ footer a{
     width: 0%;
     transition: all 0.1s;
 }
+
+.manual-block{
+    padding: 50px;
+}
+
+.manual-block p {
+    padding: 15px;
+}
