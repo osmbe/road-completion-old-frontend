@@ -5,11 +5,12 @@ let Issue = mongoose.model('Issue');
 var request = require('request');
 
 
-/* GET home page. */
+/* to check if the server is running. */
 router.get('/', (req, res, next) => {
   res.send('Server works!');
 });
 
+// get an issue by its hash, not used for now
 router.get('/ISSUE/:hash', (req, res, next) => {
   Issue.findOne({ "hash": req.params.hash }, (err, issue) => {
     if (err) return next(err);
@@ -19,6 +20,7 @@ router.get('/ISSUE/:hash', (req, res, next) => {
 });
 
 // Post an issue
+// first authenticate
 router.post('/ISSUE/', (req, res, next) => {
 
   request.get({
@@ -77,7 +79,8 @@ router.post('/ISSUE/', (req, res, next) => {
 });
 
 
-//get set status issue by user
+//get all issues that have a status by userid
+//first authenticate
 router.post('/ISSUE/USER/', (req, res, next) => {
 
   request.get({
@@ -125,31 +128,11 @@ router.get('/NONEISSUES/', (req, res, next) => {
   });
 });
 
-// If we get a POST request with the /ISSUES/ route,
-// we delete the fixed issues
 router.post('/ISSUES/', (req, res, next) => {
   Issue.find({ "status": "fixed" }, (err, iss) => {
     res.json(iss);
   });
 });
 
-// TODO: WRITE LOG INTO A TXT FILE
-
 module.exports = router;
 
-/*
-// I don't think we need this for the moment
-router.param('ISSUE', (req, res, next, id) => {
-  let query = Issue.findById(id);
-  query.exec((err, issue) => {
-    if(err) return next(err);
-    if (!recipe) return next(new Error('Not found ' + id));
-    req.issue = issue;
-    return next();
-  });
-});
-
-router.get('/ISSUE/:id',(req, res, next) => {
-  res.json(req.issue);
-});
-*/
